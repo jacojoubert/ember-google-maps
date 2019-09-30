@@ -126,7 +126,11 @@ export default Mixin.create({
   },
 
   willDestroyElement() {
-    this._eventListeners.forEach((remove) => remove());
+    this._eventListeners.forEach((remove) => {
+      if (remove) { 
+        remove() 
+      }
+    });
 
     this._super(...arguments);
   },
