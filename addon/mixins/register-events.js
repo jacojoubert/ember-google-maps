@@ -43,7 +43,11 @@ function _addEventListener(target, originalEventName, action, payload = {}) {
   return {
     name: eventName,
     listener,
-    remove: () => listener.remove()
+    remove: () => {
+      if (listener) {
+        listener.remove();
+      }
+    }
   };
 }
 
@@ -126,11 +130,7 @@ export default Mixin.create({
   },
 
   willDestroyElement() {
-    this._eventListeners.forEach((remove) => {
-      if (remove) { 
-        remove() 
-      }
-    });
+    this._eventListeners.forEach((remove) => remove());
 
     this._super(...arguments);
   },
